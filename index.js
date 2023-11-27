@@ -38,14 +38,20 @@ const User = sequelize.define(
 User.sync({ force: true })
   .then(() => {
     return User.create({
-      username: "Srdr89",
+      username: "TestName",
       password: "TestPass",
       age: 37,
     });
   })
   .then((data) => {
+    data.username = "Noname";
+    data.age = 45;
     console.log("User: ", data.toJSON());
-    return data.destroy();
+    return data.save({ fields: ["age", "username"] });
+  })
+  .then((data) => {
+    console.log("New Data");
+    console.log(data.toJSON());
   })
   .catch(() => {
     console.log("Error");
